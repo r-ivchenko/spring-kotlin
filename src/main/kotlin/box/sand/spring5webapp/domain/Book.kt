@@ -35,8 +35,11 @@ class Book(
         return true
     }
 
+    //TODO: NOTE that current implementation is incorrect
+    // due to Hibernate requirement that
+    // hashcode should be the same during Entity instance lifecycle
     override fun hashCode(): Int {
-        return id.hashCode()
+        return id?.hashCode() ?: 0
     }
 
     override fun toString(): String {
