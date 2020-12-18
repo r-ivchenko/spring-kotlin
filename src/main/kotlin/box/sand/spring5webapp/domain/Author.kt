@@ -7,15 +7,17 @@ import javax.persistence.GenerationType
 import javax.persistence.ManyToMany
 
 @Entity
-data class Author(
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long,
+class Author(
     val firstName: String,
     val secondName: String,
-    @ManyToMany(mappedBy = "authors")
-    val books: Set<Book>
 ) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+
+    @ManyToMany(mappedBy = "authors", cascade = [CascadeType.ALL])
+    var books: MutableSet<Book>? = null
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -32,6 +34,6 @@ data class Author(
     }
 
     override fun toString(): String {
-        return "Author(id=$id, firstName='$firstName', secondName='$secondName', books=$books)"
+        return "Author(id=$id, firstName='$firstName', secondName='$secondName')"
     }
 }

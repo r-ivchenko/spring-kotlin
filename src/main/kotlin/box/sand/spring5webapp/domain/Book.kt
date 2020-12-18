@@ -9,20 +9,21 @@ import javax.persistence.JoinTable
 import javax.persistence.JoinColumn
 
 @Entity
-data class Book(
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long,
+class Book(
     val name: String,
     val isbn: String,
+) {
     @ManyToMany
     @JoinTable(
         name = "author_book",
         joinColumns = [JoinColumn(name = "book_id")],
         inverseJoinColumns = [JoinColumn(name = "author_id")]
     )
-    val authors: Set<Author>
-) {
+    var authors: MutableSet<Author> = mutableSetOf()
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -39,6 +40,6 @@ data class Book(
     }
 
     override fun toString(): String {
-        return "Book(id=$id, name='$name', isbn='$isbn', authors=$authors)"
+        return "Book(id=$id, name='$name', isbn='$isbn')"
     }
 }
