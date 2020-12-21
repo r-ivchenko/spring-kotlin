@@ -16,7 +16,7 @@ class Author(
     val hash: UUID = UUID.randomUUID()
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    val id: Long? = null
 
     @ManyToMany(mappedBy = "authors", cascade = [CascadeType.ALL])
     var books: MutableSet<Book>? = null

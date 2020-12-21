@@ -24,7 +24,7 @@ class Book(
     var authors: MutableSet<Author> = mutableSetOf()
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    val id: Long? = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

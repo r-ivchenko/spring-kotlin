@@ -17,7 +17,7 @@ class Publisher(
     val hash: UUID = UUID.randomUUID()
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    val id: Long? = null
 
     override fun hashCode(): Int {
         return hash.hashCode()
