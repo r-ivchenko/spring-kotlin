@@ -2,16 +2,19 @@ package box.sand.spring5webapp.bootstrap
 
 import box.sand.spring5webapp.domain.Author
 import box.sand.spring5webapp.domain.Book
+import box.sand.spring5webapp.domain.Publisher
 import box.sand.spring5webapp.repositories.AuthorRepository
 import box.sand.spring5webapp.repositories.BookRepository
+import box.sand.spring5webapp.repositories.PublisherRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class BootStrapData(
     private val authorRepository: AuthorRepository,
-    private val bookRepository: BookRepository
+    private val bookRepository: BookRepository,
+    private val publisherRepository: PublisherRepository
 ): CommandLineRunner {
 
     override fun run(vararg args: String?) {
@@ -29,7 +32,16 @@ class BootStrapData(
         authorRepository.save(rod)
         bookRepository.save(noEJB)
 
+        val oreilly = Publisher("O'reilly",
+            "1005 Gravenstein Highway North",
+            "Sebastopol",
+            "California",
+            "95472")
+        publisherRepository.save(oreilly)
+
         println("Started in Bootstrap")
-        println("Number of Books: ${bookRepository.count()}")
+
+        println("Number of publisher: ${publisherRepository.count()}")
+
     }
 }
