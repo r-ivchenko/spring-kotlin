@@ -18,6 +18,13 @@ class BootStrapData(
 ): CommandLineRunner {
 
     override fun run(vararg args: String?) {
+        val oreilly = Publisher("O'reilly",
+            "1005 Gravenstein Highway North",
+            "Sebastopol",
+            "California",
+            "95472")
+        publisherRepository.save(oreilly)
+
         val eric = Author("Eric", "Evans")
         val ddd = Book("Domain Driven Design", UUID.randomUUID().toString())
         eric.books = mutableSetOf(ddd)
@@ -27,21 +34,23 @@ class BootStrapData(
 
         val rod = Author("Rod", "Johnson")
         val noEJB = Book("J2EE Development without EJB", UUID.randomUUID().toString())
-        rod.books = mutableSetOf(noEJB)
-        noEJB.authors = mutableSetOf(rod)
+        rod.books.add(noEJB)
+        noEJB.authors.add(rod)
+
+        ddd.publisher = oreilly
+        oreilly.books.add(ddd)
+        noEJB.publisher = oreilly
+        oreilly.books.add(noEJB)
+
         authorRepository.save(rod)
         bookRepository.save(noEJB)
-
-        val oreilly = Publisher("O'reilly",
-            "1005 Gravenstein Highway North",
-            "Sebastopol",
-            "California",
-            "95472")
         publisherRepository.save(oreilly)
+
 
         println("Started in Bootstrap")
 
         println("Number of publisher: ${publisherRepository.count()}")
+        println("Publisher number of books: ${oreilly.books.size}")
 
     }
 }

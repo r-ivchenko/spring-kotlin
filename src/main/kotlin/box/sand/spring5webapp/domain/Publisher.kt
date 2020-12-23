@@ -1,10 +1,7 @@
 package box.sand.spring5webapp.domain
 
 import java.util.UUID
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Entity
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class Publisher(
@@ -14,28 +11,24 @@ class Publisher(
     val state: String,
     val zip: String
 ) {
-    val hash: UUID = UUID.randomUUID()
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: UUID = UUID.randomUUID()
+
+    @OneToMany
+    @JoinColumn(name = "publisher_id")
+    var books: MutableSet<Book> = HashSet()
 
     override fun hashCode(): Int {
-        return hash.hashCode()
+        return id?.hashCode()
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Publisher
-
-        if (name != other.name) return false
-        if (addressLine != other.addressLine) return false
-        if (city != other.city) return false
-        if (state != other.state) return false
-        if (zip != other.zip) return false
-        if (id != other.id) return false
-
-        return true
+        return when(other) {
+            is Publisher -> id == other.id
+            else -> false
+        }
     }
 }
