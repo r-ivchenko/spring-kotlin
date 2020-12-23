@@ -13,27 +13,24 @@ class Author(
     val firstName: String,
     val secondName: String,
 ) {
-    val hash: UUID = UUID.randomUUID()
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: UUID = UUID.randomUUID()
 
     @ManyToMany(mappedBy = "authors", cascade = [CascadeType.ALL])
-    var books: MutableSet<Book>? = null
+    var books: MutableSet<Book> = mutableSetOf()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Author
-
-        if (id != other.id) return false
-
-        return true
+        return when(other) {
+            is Publisher -> id == other.id
+            else -> false
+        }
     }
 
     override fun hashCode(): Int {
-        return hash.hashCode()
+        return id?.hashCode()
     }
 
     override fun toString(): String {

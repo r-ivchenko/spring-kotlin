@@ -1,20 +1,13 @@
 package box.sand.spring5webapp.domain
 
 import java.util.UUID
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.ManyToMany
-import javax.persistence.JoinTable
-import javax.persistence.JoinColumn
+import javax.persistence.*
 
 @Entity
 class Book(
     val name: String,
     val isbn: String,
 ) {
-    val hash: UUID = UUID.randomUUID()
     @ManyToMany
     @JoinTable(
         name = "author_book",
@@ -22,23 +15,25 @@ class Book(
         inverseJoinColumns = [JoinColumn(name = "author_id")]
     )
     var authors: MutableSet<Author> = mutableSetOf()
+
+    @ManyToOne
+    lateinit var publisher: Publisher
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
+    val id: UUID = UUID.randomUUID()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Book
-
-        if (id != other.id) return false
-
-        return true
+        return when(other) {
+            is Publisher -> id == other.id
+            else -> false
+        }
     }
 
     override fun hashCode(): Int {
-        return hash.hashCode()
+        return id?.hashCode()
     }
 
     override fun toString(): String {
