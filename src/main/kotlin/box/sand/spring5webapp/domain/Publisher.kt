@@ -1,7 +1,10 @@
 package box.sand.spring5webapp.domain
 
 import java.util.UUID
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.OneToMany
 
 @Entity
 class Publisher(

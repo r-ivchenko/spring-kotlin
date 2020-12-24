@@ -1,7 +1,12 @@
 package box.sand.spring5webapp.domain
 
 import java.util.UUID
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.ManyToMany
+import javax.persistence.JoinTable
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity
 class Book(

@@ -3,8 +3,6 @@ package box.sand.spring5webapp.domain
 import java.util.UUID
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
 import javax.persistence.ManyToMany
 import javax.persistence.CascadeType
 
